@@ -4,5 +4,10 @@
 #'
 #' @name metalpDataPreprocessing
 #' @docType package
-#' @import shiny miniUI shinyFiles jsonlite zoo data.table lubridate magrittr dplyr purrr
+#' @import shiny miniUI lubridate magrittr dplyr
+#' @importFrom data.table fread
+#' @importFrom jsonlite toJSON
+#' @importFrom purrr map_dfc
+#' @importFrom zoo na.approx
+#' @importFrom shinyFiles shinyDirButton shinyDirChoose parseDirPath
 NULL
