@@ -1,0 +1,37 @@
+.content-wrapper {
+    padding: 10px;
+    height: 100%;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-template-rows: 1fr 2fr;
+    row-gap: 10px;
+}
+
+.left-btns {
+    padding: 0 0 0 10px;
+}
+
+.input-dir {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-dir .btn {
+    margin: 0 0 .5em auto;
+}
+
+.input-dir p {
+    padding: .5em;
+    border: 1px solid grey;
+    border-radius: 5px;
+    min-height: 2.5em;
+    overflow-wrap: break-word;
+}
+
+#console {
+    grid-column: span 2;
+
+}
