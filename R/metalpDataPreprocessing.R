@@ -5,12 +5,16 @@
 #'
 #' @export
 metalpDataPreprocessing <- function() {
+  addResourcePath('metalpDP', system.file('www', package = "metalpDataPreprocessing"))
   ui <- miniPage(
-    includeCSS(system.file("www/main.css", package = "metalpDataPreprocessing")),
-    gadgetTitleBar('Sensors raw data processing', left = miniTitleBarCancelButton(), right = NULL),
+    tags$head(
+      tags$link(href = 'metalpDP/main.css', rel = 'stylesheet', type = 'text/css'),
+      tags$script(src = 'metalpDP/main.js')
+    ),
+    gadgetTitleBar('Sensors raw data processing', left = miniTitleBarCancelButton(), right = miniTitleBarButton('run', 'Run',primary = TRUE)),
     div(
-      class = 'content-wrapper',
-      fillCol(
+      class = 'content-wrapper grid-2',
+      div(
         selectizeInput(
           inputId =  'sites',
           label = 'Stations',
@@ -22,23 +26,55 @@ metalpDataPreprocessing <- function() {
           )
         ),
         selectizeInput(
-          inputId =  'sites',
-          label = 'Stations',
+          inputId =  'parameters',
+          label = 'Parameters',
           choices = c('BP', 'CO2atm', 'TURB', 'DO', 'CDOM', 'COND', 'PAR1', 'PAR2', 'DEPTH', 'pCO2'),
           multiple = TRUE,
           options = list(
-            'placeholder' = 'Select some stations...',
+            'placeholder' = 'Select some parameters...',
             'plugins' = list('remove_button')
           )
         )
-      )
+      ),
+      div(
+        class = 'left-btns',
+        div(
+          class = 'input-dir',
+          shinyDirButton('inputDir', 'Input Directory', 'Choose input directory'),
+          textOutput('selectedInputDir', container = p),
+        ),
+        div(
+          class = 'input-dir',
+          shinyDirButton('outputDir', 'Output Directory', 'Choose output directory'),
+          textOutput('selectedOutputDir', container = p),
+        )
+      ),
+      pre(id = 'console')
     )
   )
 
   server <- function(input, output, session) {
+    roots <- c('home' = '~', 'working directory' = '.')
 
+    shinyDirChoose(input, 'inputDir', roots = roots)
+    shinyDirChoose(input, 'outputDir', roots = roots)
+
+    output$selectedInputDir <- renderText(parseDirPath(roots, input$inputDir))
+    output$selectedOutputDir <- renderText(parseDirPath(roots, input$outputDir))
+
+    observeEvent(input$run, ignoreInit = TRUE, {
+      withConsoleRedirect('console', {
+        combineSensorsDataPerSite(
+          inputDir = parseDirPath(roots, input$inputDir),
+          outputDir = parseDirPath(roots, input$outputDir),
+          sites = input$sites,
+          parameters = input$parameters
+        )
+      })
+    })
   }
 
   viewer <- dialogViewer('METALP Data Preprocessing')
+  # viewer <- browserViewer()
   runGadget(ui, server, viewer = viewer)
 }
