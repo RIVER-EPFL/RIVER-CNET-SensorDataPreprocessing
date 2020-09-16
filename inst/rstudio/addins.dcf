@@ -1,0 +1,4 @@
+Name: METALP Sensor Data Preprocessing
+Description: Friendly GUI for METALP sensors data preprocessing.
+Binding: metalpDataPreprocessing
+Interactive: true
