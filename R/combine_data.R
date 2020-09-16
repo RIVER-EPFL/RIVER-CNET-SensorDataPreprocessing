@@ -115,12 +115,16 @@ parseCO2ATM <- function(filePath) {
     ) %>%
     filter(Type == 'Data') %>%
     select(Date, CO2atmppm, CO2atmTemp, CO2atmRH) %>%
-    mutate(Date = ymd_hms(Date))
+    mutate(
+      Date = ymd_hms(Date),
+      CO2atmDateReset = 0
+    )
 
   if (co2atmDf$Date[1] > co2atmDf$Date[nrow(co2atmDf)]) {
     lastCorrectDate <- max(co2atmDf$Date)
     correctDates <- co2atmDf %>% filter(year(Date) == year(lastCorrectDate)) %>% pull(Date)
     nbIncorrectDates <- co2atmDf %>% filter(year(Date) != year(lastCorrectDate)) %>% nrow()
+    co2atmDf %<>% mutate(CO2atmDateReset = if_else(year(Date) != year(lastCorrectDate), 1, CO2atmDateReset))
     dateIntervalMinutes <- int_length(correctDates[1] %--% correctDates[2]) / 60
     correctedDates <- seq.POSIXt(
       from = lastCorrectDate + minutes(dateIntervalMinutes),
