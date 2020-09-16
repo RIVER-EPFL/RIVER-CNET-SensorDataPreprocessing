@@ -73,29 +73,18 @@ parseBP <- function(filePath) {
 
 
 parseNDEPTH <- function(filePath) {
-  ndepthDf <- fread(filePath)
-  if ('wtemp_a_2' %in% colnames(ndepthDf)) {
-    ndepthDf %<>% rename(
-      Date = datetime,
-      DepthTempdegC1 = wtemp_p_1,
-      DepthTempdegC2 = wtemp_a_2,
-      WaterDepthmm1 = wtrhgt__3,
-      WaterDepthmm2 = wtrhgt__4,
-      DepthBatt = batt_mi_5
-    ) %>%
-    select(Date, DepthTempdegC1, DepthTempdegC2, WaterDepthmm1, WaterDepthmm2, DepthBatt)
-  } else {
-    ndepthDf %<>% rename(
-      Date = datetime,
-      DepthTempdegC1 = wtemp_p_1,
-      WaterDepthmm1 = wtrhgt__2,
-      WaterDepthmm2 = wtrhgt__3,
-      DepthBatt = batt_mi_4
-    ) %>%
-      select(Date, DepthTempdegC1, WaterDepthmm1, WaterDepthmm2, DepthBatt)
-  }
+  ndepthDf <- data.table::fread(filePath) %>% rename(
+    Date = datetime,
+    DepthTempdegC = starts_with('wtemp'),
+    WaterDepthmm = starts_with('wtrhgt'),
+    DepthBatt = starts_with('batt')
+  )
 
-  ndepthDf %<>% mutate(Date = dmy_hms(Date))
+  if ('DepthTempdegC1' %in% colnames(ndepthDf)) ndepthDf %<>% rename(DepthTempdegC = DepthTempdegC1)
+  if ('WaterDepthmm1' %in% colnames(ndepthDf)) ndepthDf %<>% rename(WaterDepthmm = WaterDepthmm1)
+
+  ndepthDf %<>% select(Date, DepthTempdegC, WaterDepthmm, DepthBatt) %>%
+    mutate(Date = dmy_hms(Date))
 
   parseDate(ndepthDf)
 }
