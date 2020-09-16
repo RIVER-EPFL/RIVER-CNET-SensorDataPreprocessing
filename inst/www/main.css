@@ -35,3 +35,7 @@
     grid-column: span 2;
 
 }
+
+.sF-dirWindow .sF-dirInfo > div {
+    height: 25vh;
+}
