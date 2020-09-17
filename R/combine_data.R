@@ -75,6 +75,8 @@ parseBP <- function(filePath) {
     select(Date, BPmbar, BPTemp) %>%
     mutate(Date = mdy_hms(Date))
 
+  if (nrow(bpDf) == 0) return(bpDf)
+
   parseDate(bpDf)
 }
 
@@ -87,11 +89,14 @@ parseNDEPTH <- function(filePath) {
     DepthBatt = starts_with('batt')
   )
 
+  if (nrow(ndepthDf) == 0) return(ndepthDf)
+
   if ('DepthTempdegC1' %in% colnames(ndepthDf)) ndepthDf %<>% rename(DepthTempdegC = DepthTempdegC1)
   if ('WaterDepthmm1' %in% colnames(ndepthDf)) ndepthDf %<>% rename(WaterDepthmm = WaterDepthmm1)
 
   ndepthDf %<>% select(Date, DepthTempdegC, WaterDepthmm, DepthBatt) %>%
     mutate(Date = dmy_hms(Date))
+
 
   parseDate(ndepthDf)
 }
@@ -116,12 +121,14 @@ parseCO2ATM <- function(filePath) {
       CO2atmDateReset = 0
     )
 
+  if (nrow(co2atmDf) == 0) return(co2atmDf)
+
   if (co2atmDf$Date[1] > co2atmDf$Date[nrow(co2atmDf)]) {
     lastCorrectDate <- max(co2atmDf$Date)
     correctDates <- co2atmDf %>% filter(year(Date) == year(lastCorrectDate)) %>% pull(Date)
     nbIncorrectDates <- co2atmDf %>% filter(year(Date) != year(lastCorrectDate)) %>% nrow()
     co2atmDf %<>% mutate(CO2atmDateReset = if_else(year(Date) != year(lastCorrectDate), 1, CO2atmDateReset))
-    dateIntervalMinutes <- int_length(correctDates[1] %--% correctDates[2]) / 60
+    dateIntervalMinutes <- round(int_length(correctDates[1] %--% correctDates[2]) / 60)
     correctedDates <- seq.POSIXt(
       from = lastCorrectDate + minutes(dateIntervalMinutes),
       by = paste0(dateIntervalMinutes, ' mins'),
@@ -147,6 +154,8 @@ parseCOND <- function(filePath) {
     select(Date, ConduScm, CondTemp) %>%
     mutate(Date = mdy_hms(Date))
 
+  if (nrow(condDf) == 0) return(condDf)
+
   parseDate(condDf)
 }
 
@@ -161,6 +170,8 @@ parsePAR1 <- function(filePath) {
     select(Date, PAR1Lux, PAR1Temp) %>%
     mutate(Date = mdy_hms(Date))
 
+  if (nrow(par1Df) == 0) return(par1Df)
+
   parseDate(par1Df)
 }
 
@@ -174,6 +185,8 @@ parsePAR2 <- function(filePath) {
     ) %>%
     select(Date, PAR2Lux, PAR2Temp) %>%
     mutate(Date = mdy_hms(Date))
+
+  if (nrow(par2Df) == 0) return(par2Df)
 
   parseDate(par2Df)
 }
@@ -196,6 +209,8 @@ parseCDOM <- function(filePath) {
       CDOMGain = as.integer(CDOMGain)
     )
 
+  if (nrow(cdomDf) == 0) return(cdomDf)
+
   parseDate(cdomDf)
 }
 
@@ -216,6 +231,8 @@ parseDO <- function(filePath) {
       Date = ymd_hms(Date),
       across(-Date, as.numeric)
     )
+
+  if (nrow(doDf) == 0) return(doDf)
 
   parseDate(doDf)
 }
@@ -238,6 +255,8 @@ parseTURB <- function(filePath) {
       TurbiGain = as.integer(TurbiGain)
     )
 
+  if (nrow(turbDf) == 0) return(turbDf)
+
   parseDate(turbDf)
 }
 
@@ -249,6 +268,8 @@ parsePCO2 <- function(filePath) {
       pCO2ppm = ppm
     ) %>%
     mutate(Date = dmy_hms(Date))
+
+  if (nrow(pco2Df) == 0) return(pco2Df)
 
   parseDate(pco2Df)
 }
@@ -282,7 +303,8 @@ parseDate <- function(df) {
 ## Row merging function ###########################################################
 
 appendData <- function(df, newDf) {
-  if(sum(dim(df)) == 0) return(newDf)
+  if (sum(dim(df)) == 0) return(newDf)
+  if (nrow(newDf) == 0) return(df)
   endDateDf <- max(df$Date)
   startDateNewDf <- min(newDf$Date)
 
