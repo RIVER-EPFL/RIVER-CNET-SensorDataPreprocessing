@@ -114,12 +114,22 @@ parseCO2ATM <- function(filePath) {
       CO2atmTemp = `Temp(\xb0C)`,
       CO2atmRH = `RH(%)`
     ) %>%
-    filter(Type == 'Data') %>%
+    filter(
+      Type == 'Data',
+      CO2atmppm < 10000
+    ) %>%
     select(Date, CO2atmppm, CO2atmTemp, CO2atmRH) %>%
     mutate(
       Date = ymd_hms(Date),
       CO2atmDateReset = 0
     )
+
+  if (all(year(co2atmDf$Date) == 2000)) {
+    message('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    warning(paste0('The following file is ignored because all the dates are from 2000.\n  File: ', filePath), call. = FALSE, immediate. = TRUE)
+    message('!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n')
+    return(data.frame())
+  }
 
   if (nrow(co2atmDf) == 0) return(co2atmDf)
 
@@ -135,7 +145,7 @@ parseCO2ATM <- function(filePath) {
       length.out = nbIncorrectDates
     )
     message('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    warning(paste0('Date resetting problem for CO2ATM.\n  Starting at date: ', min(correctedDates), '\n  Finishing at date: ', max(correctedDates)), call. = FALSE, immediate. = TRUE)
+    warning(paste0('Date resetting problem for CO2ATM.\n  File: ', filePath, '\n  Starting at date: ', min(correctedDates), '\n  Finishing at date: ', max(correctedDates)), call. = FALSE, immediate. = TRUE)
     message('!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n')
     co2atmDf %<>% mutate(Date = all_of(c(correctDates, correctedDates)))
   }
