@@ -74,7 +74,7 @@ metalpDataPreprocessing <- function() {
     })
   }
 
-  # viewer <- dialogViewer('METALP Data Preprocessing', width = 800, height = 800)
-  viewer <- browserViewer()
+  viewer <- dialogViewer('METALP Data Preprocessing', width = 800, height = 800)
+  # viewer <- browserViewer()
   runGadget(ui, server, viewer = viewer)
 }

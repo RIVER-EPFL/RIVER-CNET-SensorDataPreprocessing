@@ -303,8 +303,8 @@ parseDate <- function(df) {
 ## Row merging function ###########################################################
 
 appendData <- function(df, newDf) {
-  if (sum(dim(df)) == 0) return(newDf)
   if (nrow(newDf) == 0) return(df)
+  if (sum(dim(df)) == 0) return(newDf)
   endDateDf <- max(df$Date)
   startDateNewDf <- min(newDf$Date)
 
