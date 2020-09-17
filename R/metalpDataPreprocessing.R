@@ -11,7 +11,7 @@ metalpDataPreprocessing <- function() {
       tags$link(href = 'metalpDP/main.css', rel = 'stylesheet', type = 'text/css'),
       tags$script(src = 'metalpDP/main.js')
     ),
-    gadgetTitleBar('Sensors raw data processing', left = miniTitleBarCancelButton(), right = miniTitleBarButton('run', 'Run',primary = TRUE)),
+    gadgetTitleBar('Sensors raw data processing', left = NULL, right = miniTitleBarButton('run', 'Run',primary = TRUE)),
     div(
       class = 'content-wrapper grid-2',
       div(
@@ -54,10 +54,10 @@ metalpDataPreprocessing <- function() {
   )
 
   server <- function(input, output, session) {
-    roots <- c('home' = '~', 'working directory' = '.')
+    roots <- c('root' = '/', 'home' = '~', 'working directory' = '.')
 
-    shinyDirChoose(input, 'inputDir', roots = roots)
-    shinyDirChoose(input, 'outputDir', roots = roots)
+    shinyDirChoose(input, 'inputDir', roots = roots, defaultRoot = 'working directory')
+    shinyDirChoose(input, 'outputDir', roots = roots, defaultRoot = 'working directory')
 
     output$selectedInputDir <- renderText(parseDirPath(roots, input$inputDir))
     output$selectedOutputDir <- renderText(parseDirPath(roots, input$outputDir))
@@ -74,7 +74,7 @@ metalpDataPreprocessing <- function() {
     })
   }
 
-  viewer <- dialogViewer('METALP Data Preprocessing')
+  viewer <- dialogViewer('METALP Data Preprocessing', width = 800, height = 800)
   # viewer <- browserViewer()
   runGadget(ui, server, viewer = viewer)
 }
