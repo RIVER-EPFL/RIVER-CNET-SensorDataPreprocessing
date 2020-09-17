@@ -265,7 +265,7 @@ parseDate <- function(df) {
   second(df$Date) <- 00
   # If starting date minutes are not dividable by ten
   # Round the minutes to the closer multiple of ten
-  if (minute(df$Date[1]) %% 10 != 0 | (df$Date[1] %--% df$Date[2] %>% int_length() / 60) %% 10) df$Date <- round_date(df$Date, '10 mins')
+  df$Date <- round_date(df$Date, '10 mins')
   # If intervals are bigger than 10min
   # Interpolate the missing data
   if (df$Date[1] %--% df$Date[nrow(df)] / minutes(10) + 1 != nrow(df)) {

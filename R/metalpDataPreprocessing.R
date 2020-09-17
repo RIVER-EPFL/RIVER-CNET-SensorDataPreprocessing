@@ -49,7 +49,7 @@ metalpDataPreprocessing <- function() {
           textOutput('selectedOutputDir', container = p),
         )
       ),
-      pre(id = 'console')
+      pre(id = 'console-raw', class = 'console')
     )
   )
 
@@ -63,7 +63,7 @@ metalpDataPreprocessing <- function() {
     output$selectedOutputDir <- renderText(parseDirPath(roots, input$outputDir))
 
     observeEvent(input$run, ignoreInit = TRUE, {
-      withConsoleRedirect('console', {
+      withConsoleRedirect('console-raw', {
         combineSensorsDataPerSite(
           inputDir = parseDirPath(roots, input$inputDir),
           outputDir = parseDirPath(roots, input$outputDir),
@@ -74,7 +74,7 @@ metalpDataPreprocessing <- function() {
     })
   }
 
-  viewer <- dialogViewer('METALP Data Preprocessing', width = 800, height = 800)
-  # viewer <- browserViewer()
+  # viewer <- dialogViewer('METALP Data Preprocessing', width = 800, height = 800)
+  viewer <- browserViewer()
   runGadget(ui, server, viewer = viewer)
 }
