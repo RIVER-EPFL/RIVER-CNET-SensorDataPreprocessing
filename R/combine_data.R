@@ -31,6 +31,13 @@ combineSensorsDataPerSite <- function(inputDir, outputDir, sites, parameters) {
         if (parameter$pattern == 'Cat.TXT$') file %<>% grep(parameter$subpattern, ., ignore.case = TRUE, value = TRUE)
         if (length(file) == 0) next
 
+        if (file.info(file)$size == 0) {
+          message('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+          warning(paste0('The following file is empty!\n  ', file), call. = FALSE, immediate. = TRUE)
+          message('!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n')
+          next
+        }
+
         currentFunc <- match.fun(parameter$parsingFunc)
 
         fileData <- currentFunc(file)
@@ -258,13 +265,13 @@ parseDate <- function(df) {
   second(df$Date) <- 00
   # If starting date minutes are not dividable by ten
   # Round the minutes to the closer multiple of ten
-  if (minute(df$Date[1]) %% 10 != 0) df$Date <- round_date(df$Date, '10 mins')
+  if (minute(df$Date[1]) %% 10 != 0 | (df$Date[1] %--% df$Date[2] %>% int_length() / 60) %% 10) df$Date <- round_date(df$Date, '10 mins')
   # If intervals are bigger than 10min
   # Interpolate the missing data
   if (df$Date[1] %--% df$Date[nrow(df)] / minutes(10) + 1 != nrow(df)) {
     df <- data.frame('Date' = seq.POSIXt(from = df$Date[1], to = df$Date[nrow(df)], by = '10 mins')) %>%
       full_join(df, by = 'Date') %>%
-      mutate(across(-Date, na.approx, maxgap = 2))
+      mutate(across(-Date, na.approx, maxgap = 5))
   }
   # Return updated df
   return(df)
