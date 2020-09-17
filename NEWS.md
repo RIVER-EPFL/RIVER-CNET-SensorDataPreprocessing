@@ -1,3 +1,17 @@
+# Version 0.1.2
+
+Bug fixes:
+- Improve `CO2ATM` files parsing to cover more problematic situations
+- Correct the `appendData` function
+- Change `parseDate` function to round systematicaly the time to 10 mins
+- Ignore empty files and empty data frames
+- Mkae the `coalesce_join` function df agnostic
+- Increase the `maxgap` size for the data interpolation to 5
+
+Other changes:
+- Change some styling
+- Increase addin window size
+
 # Version 0.1.1
 
 Minor bug fix in the `combine_data.R` logic.
