@@ -43,7 +43,7 @@ coalesce_join <- function(x, y,
   ))
   names(coalesced) <- to_coalesce
 
-  bind_cols(joined, coalesced)[cols]
+  bind_cols(joined, coalesced) %>% select(all_of(cols))
 }
 
 
