@@ -1,3 +1,16 @@
+# Version 0.1.3
+
+Add few enhencements:
+- Add a `All` and `Clear` button to select inputs
+- Add spinner to indicate a long running process
+- Suppress the messages from the main R console
+- Suppress some useless message from the `coalesce_join` function
+- Gracefully abort if no folder is found in the input directory
+- Ensure that all the inputs are filled before running the script
+- Clear the fake console before a new run
+- Imporve some code in the `combine_data.R`
+- Some aesthetics improvements
+
 # Version 0.1.2
 
 Bug fixes:
