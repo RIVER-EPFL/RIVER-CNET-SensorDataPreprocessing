@@ -11,7 +11,12 @@ metalpDataPreprocessing <- function() {
       tags$link(href = 'metalpDP/main.css', rel = 'stylesheet', type = 'text/css'),
       tags$script(src = 'metalpDP/main.js')
     ),
-    gadgetTitleBar('Sensors raw data processing', left = NULL, right = miniTitleBarButton('run', 'Run',primary = TRUE)),
+    use_busy_spinner(spin = 'looping-rhombuses', color = '#112446' ,position = 'top-left', margins = c(15, 10)),
+    gadgetTitleBar(
+      'Sensors raw data processing',
+      left = NULL,
+      right = miniTitleBarButton('run', 'Run',primary = TRUE)
+    ),
     div(
       class = 'content-wrapper grid-2',
       div(
@@ -90,6 +95,7 @@ metalpDataPreprocessing <- function() {
 
     observeEvent(input$run, ignoreInit = TRUE, {
       req(input$sites, input$parameters, parseDirPath(roots, input$inputDir), parseDirPath(roots, input$outputDir))
+      show_spinner()
 
       sendUpdateToConcole(id = 'console-raw', action = 'clear')
 
@@ -101,6 +107,8 @@ metalpDataPreprocessing <- function() {
           parameters = input$parameters
         )
       })
+
+      hide_spinner()
     })
   }
 
