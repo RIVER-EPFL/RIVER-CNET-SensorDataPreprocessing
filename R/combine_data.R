@@ -31,7 +31,7 @@ combineSensorsDataPerSite <- function(inputDir, outputDir, sites, parameters) {
     for (parameter in parameters) {
       parameter <- parametersInfo %>% filter(name == parameter)
       parameterData <- data.frame()
-      message('  Merging patameter ', parameter$name, ' ...')
+      message('  Merging parameter ', parameter$name, ' ...')
       for (dir in siteDirsList){
         file <- list.files(dir, pattern = parameter$pattern, ignore.case = TRUE, full.names = TRUE, recursive = TRUE)
         if (parameter$pattern == 'Cat.TXT$') file %<>% grep(parameter$subpattern, ., ignore.case = TRUE, value = TRUE)
