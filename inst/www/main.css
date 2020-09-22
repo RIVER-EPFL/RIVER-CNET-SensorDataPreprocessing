@@ -18,6 +18,12 @@
     padding: 0 0 0 10px;
 }
 
+.gadget-title button.btn {
+    padding: 0 10px;
+    font-size: 17px;
+    text-transform: uppercase;
+}
+
 /* ========================================
  * Directory Selection Input Style
  * ======================================== */
