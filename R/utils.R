@@ -9,13 +9,15 @@ sendUpdateToConcole <- function(id, action = 'update', content = NULL, session =
 }
 
 withConsoleRedirect <- function(containerId, expr) {
-  withCallingHandlers(
-    results <- expr,
-    message = function(m) sendUpdateToConcole(id = containerId, content = m$message),
-    warning = function(w) {
-      parsedMessage <- paste0('Warning: ', w$message, '\n')
-      sendUpdateToConcole(id = containerId, content = parsedMessage)
-    }
+  suppressMessages(
+    withCallingHandlers(
+      results <- expr,
+      message = function(m) sendUpdateToConcole(id = containerId, content = m$message),
+      warning = function(w) {
+        parsedMessage <- paste0('Warning: ', w$message, '\n')
+        sendUpdateToConcole(id = containerId, content = parsedMessage)
+      }
+    )
   )
   results
 }
