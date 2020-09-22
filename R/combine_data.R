@@ -8,7 +8,13 @@ combineSensorsDataPerSite <- function(inputDir, outputDir, sites, parameters) {
   message()
 
   dirsList <- list.dirs(inputDir) %>% grep('/[[:alnum:]]+_[[:alpha:]]{3}$', ., value = TRUE)
-  if (length(dirsList) == 0) stop('Input directory is empty...')
+
+  if (length(dirsList) == 0) {
+    warning('Input directory is empty...', call. = FALSE, immediate. = TRUE)
+    message('\nAbort.')
+    return()
+  }
+
   message('Found ', length(dirsList), ' directory/ies to use.')
   message()
 

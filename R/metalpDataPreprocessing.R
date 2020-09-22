@@ -89,6 +89,8 @@ metalpDataPreprocessing <- function() {
     ## Script running #############################################################
 
     observeEvent(input$run, ignoreInit = TRUE, {
+      req(input$sites, input$parameters, parseDirPath(roots, input$inputDir), parseDirPath(roots, input$outputDir))
+
       sendUpdateToConcole(id = 'console-raw', action = 'clear')
 
       withConsoleRedirect('console-raw', {
