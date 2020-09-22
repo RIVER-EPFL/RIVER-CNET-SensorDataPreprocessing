@@ -37,10 +37,12 @@ coalesce_join <- function(x, y,
     nchar(to_coalesce) - nchar(suffix_used)
   ))
 
-  coalesced <- map_dfc(to_coalesce, ~coalesce(
-    joined[[paste0(.x, suffix[1])]],
-    joined[[paste0(.x, suffix[2])]]
-  ))
+  suppressMessages(
+    coalesced <- map_dfc(to_coalesce, ~coalesce(
+      joined[[paste0(.x, suffix[1])]],
+      joined[[paste0(.x, suffix[2])]]
+    ))
+  )
   names(coalesced) <- to_coalesce
 
   bind_cols(joined, coalesced) %>% select(all_of(cols))
