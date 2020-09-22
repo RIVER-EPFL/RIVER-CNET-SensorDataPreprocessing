@@ -1,7 +1,7 @@
-sendUpdateToConcole <- function(id, content, session = getDefaultReactiveDomain()) {
+sendUpdateToConcole <- function(id, action = 'update', content = NULL, session = getDefaultReactiveDomain()) {
   messageJSON <- toJSON(list(
     'id' = id,
-    'action' = 'update',
+    'action' = action,
     'text' = content
   ), auto_unbox = TRUE)
 
@@ -11,10 +11,10 @@ sendUpdateToConcole <- function(id, content, session = getDefaultReactiveDomain(
 withConsoleRedirect <- function(containerId, expr) {
   withCallingHandlers(
     results <- expr,
-    message = function(m) sendUpdateToConcole(containerId, m$message),
+    message = function(m) sendUpdateToConcole(id = containerId, content = m$message),
     warning = function(w) {
       parsedMessage <- paste0('Warning: ', w$message, '\n')
-      sendUpdateToConcole(containerId, parsedMessage)
+      sendUpdateToConcole(id = containerId, content = parsedMessage)
     }
   )
   results

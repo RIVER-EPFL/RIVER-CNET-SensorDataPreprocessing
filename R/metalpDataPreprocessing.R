@@ -63,6 +63,8 @@ metalpDataPreprocessing <- function() {
     output$selectedOutputDir <- renderText(parseDirPath(roots, input$outputDir))
 
     observeEvent(input$run, ignoreInit = TRUE, {
+      sendUpdateToConcole(id = 'console-raw', action = 'clear')
+
       withConsoleRedirect('console-raw', {
         combineSensorsDataPerSite(
           inputDir = parseDirPath(roots, input$inputDir),
