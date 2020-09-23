@@ -115,7 +115,7 @@ sensorRawDataProcessing <- function(input, output, session, roots) {
         sites = input$sites,
         parameters = input$parameters
       )
-    })
+    }, file.path(parseDirPath(roots, input$outputDir), 'warnings.txt'))
 
     # Stop spinner
     hide_spinner()

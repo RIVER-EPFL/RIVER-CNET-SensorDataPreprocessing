@@ -8,7 +8,8 @@ sendUpdateToConcole <- function(id, action = 'update', content = NULL, session =
   session$sendCustomMessage('rconsole', messageJSON)
 }
 
-withConsoleRedirect <- function(containerId, expr) {
+
+withConsoleRedirect <- function(containerId, expr, warningFile = NULL) {
   suppressMessages(
     withCallingHandlers(
       results <- expr,
@@ -16,6 +17,7 @@ withConsoleRedirect <- function(containerId, expr) {
       warning = function(w) {
         parsedMessage <- paste0('Warning: ', w$message, '\n')
         sendUpdateToConcole(id = containerId, content = parsedMessage)
+        if (!is.null(warningFile)) write(parsedMessage, warningFile, append = TRUE)
       }
     )
   )
