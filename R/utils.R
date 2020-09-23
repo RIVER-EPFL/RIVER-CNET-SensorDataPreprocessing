@@ -53,3 +53,10 @@ coalesce_join <- function(x, y,
 }
 
 
+warningMessage <- function(text) {
+  message('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+  warning(text, call. = FALSE, immediate. = TRUE)
+  message('!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n')
+}
+
+
