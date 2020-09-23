@@ -17,7 +17,17 @@ metalpDataPreprocessing <- function() {
     ),
     # Add the busy spinner (hidden until called)
     use_busy_spinner(spin = 'looping-rhombuses', color = '#112446' ,position = 'top-left', margins = c(15, 10)),
-    sensorRawDataProcessingUI('rawData')
+    # Create tab panel
+    miniTabstripPanel(
+      miniTabPanel(
+        title = 'Raw Data', icon = icon('file-export'),
+        sensorRawDataProcessingUI('rawData')
+      ),
+      miniTabPanel(
+        title = 'Portal Data', icon = icon('file-import'),
+        portalDataConversionUI('portalData')
+      )
+    )
   )
 
 
@@ -28,6 +38,8 @@ metalpDataPreprocessing <- function() {
     roots <- c('root' = '/', 'home' = '~', 'working directory' = '.')
 
     callModule(sensorRawDataProcessing, 'rawData', roots)
+
+    callModule(portalDataConversion, 'portalData', roots)
   }
 
   viewer <- dialogViewer('METALP Data Preprocessing', width = 800, height = 800)
