@@ -9,10 +9,15 @@ RConsole.getConsole = function(id) {
 RConsole.update = function(id, text) {
     const previousText = this.getConsole(id).textContent;
     this.getConsole(id).textContent = previousText + text;
+    this.autoScrollDown(id);
 };
 
 RConsole.clear = function(id) {
     this.getConsole(id).textContent = '';
+};
+
+RConsole.autoScrollDown = function(id) {
+    this.getConsole(id).scrollTop = this.getConsole(id).scrollHeight;
 };
 
 RConsole.eventHandler = function(message) {
