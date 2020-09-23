@@ -5,7 +5,8 @@
 #' @name metalpDataPreprocessing
 #' @docType package
 #' @import shiny miniUI lubridate magrittr dplyr
-#' @importFrom data.table fread
+#' @importFrom tidyr pivot_longer pivot_wider
+#' @importFrom data.table fread as.data.table
 #' @importFrom jsonlite toJSON
 #' @importFrom purrr map_dfc
 #' @importFrom zoo na.approx
