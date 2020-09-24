@@ -89,7 +89,9 @@ combineSensorsDataPerSite <- function(inputDir, outputDir, sites, parameters) {
     } # End of parameters loop
 
     # Reorder the site data ascending Date order
-    siteData %<>% arrange(Date)
+    siteData %<>% arrange(Date) %>%
+      # Round data to 2 decimals
+      mutate(across(where(is.numeric), round, digits = 2))
 
     # Create output file name and path, indicated saving process and write current site data
     outputFile <- file.path(outputDir, paste0(site, '_raw_hf.csv'))
