@@ -9,19 +9,30 @@ sendUpdateToConcole <- function(id, action = 'update', content = NULL, session =
 }
 
 
-withConsoleRedirect <- function(containerId, expr, warningFile = NULL) {
+withConsoleRedirect <- function(containerId, expr, logFile = NULL, warningFile = NULL) {
   suppressMessages(
     withCallingHandlers(
       results <- expr,
-      message = function(m) sendUpdateToConcole(id = containerId, content = m$message),
+      message = function(m) {
+        sendUpdateToConcole(id = containerId, content = m$message)
+        if (!is.null(logFile)) write(m$message, logFile, append = TRUE)
+      },
       warning = function(w) {
         parsedMessage <- paste0('Warning: ', w$message, '\n')
         sendUpdateToConcole(id = containerId, content = parsedMessage)
+        if (!is.null(logFile)) write(parsedMessage, logFile, append = TRUE)
         if (!is.null(warningFile)) write(parsedMessage, warningFile, append = TRUE)
       }
     )
   )
   results
+}
+
+
+createLogFile <- function(outDir, type = 'log') {
+  filePath <- file.path(outDir, paste0(type, '.txt'))
+  write(paste0(toupper(type), ' file date: ', Sys.time(), '\n'), filePath)
+  return(filePath)
 }
 
 

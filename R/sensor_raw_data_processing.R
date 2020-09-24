@@ -107,6 +107,10 @@ sensorRawDataProcessing <- function(input, output, session, roots) {
     # Clear the console
     sendUpdateToConcole(id = 'console-raw', action = 'clear')
 
+    # Create log and warining files
+    logFile <- createLogFile(parseDirPath(roots, input$outputDir))
+    warningFile <- createLogFile(parseDirPath(roots, input$outputDir), 'warnings')
+
     # Run the script and redirect the message and warning outputs tot the fake R cosnole
     withConsoleRedirect('console-raw', {
       combineSensorsDataPerSite(
@@ -115,7 +119,7 @@ sensorRawDataProcessing <- function(input, output, session, roots) {
         sites = input$sites,
         parameters = input$parameters
       )
-    }, file.path(parseDirPath(roots, input$outputDir), 'warnings.txt'))
+    }, logFile, warningFile)
 
     # Stop spinner
     hide_spinner()
