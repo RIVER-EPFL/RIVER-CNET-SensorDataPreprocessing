@@ -75,7 +75,7 @@ convertDataForPortal <- function(inputMeasuredDir, inputModeledDir, outputDir, d
   message('  Converting Date to POSIXct...')
 
   # Convert date to POSIXct
-  hf_10min_df$Date %<>% dmy_hm(tz = 'GMT')
+  hf_10min_df$Date %<>% ymd_hms(tz = 'GMT')
 
 
   message('  Converting data_type to factor...')
