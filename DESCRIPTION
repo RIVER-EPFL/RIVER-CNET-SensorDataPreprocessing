@@ -1,7 +1,7 @@
 Package: metalpDataPreprocessing
 Type: Package
 Title: METALP Sensor Data Preprocessing
-Version: 0.1.3
+Version: 0.2.0
 Author: Mathieu Clément [aut, cre]
 Maintainer: Mathieu Clément <mcfly1893@gmail.com>
 Description: Provide a Rstudio addin to perform all the needed data preprocessing

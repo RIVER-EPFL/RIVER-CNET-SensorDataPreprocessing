@@ -1,6 +1,15 @@
+# Version 0.2.0
+
+Enhancements:
+- Auto scroll of the fake Rconsole
+- `log.txt` and `warnings.txt` files generated for each script run
+
+Breaking changes:
+- Add a new functionality to convert data for the portal
+
 # Version 0.1.3
 
-Add few enhencements:
+Add few enhancements:
 - Add a `All` and `Clear` button to select inputs
 - Add spinner to indicate a long running process
 - Suppress the messages from the main R console
