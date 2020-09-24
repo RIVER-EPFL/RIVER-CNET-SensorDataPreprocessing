@@ -35,7 +35,7 @@ metalpDataPreprocessing <- function() {
 
   server <- function(input, output, session) {
     # Create the possible roots for the folder browsing window
-    roots <- c('root' = '/', 'home' = '~', 'working directory' = '.')
+    roots <- c(getVolumes()(), 'home' = '~', 'working directory' = '.')
 
     callModule(sensorRawDataProcessing, 'rawData', roots)
 

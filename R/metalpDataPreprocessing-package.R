@@ -10,6 +10,6 @@
 #' @importFrom jsonlite toJSON
 #' @importFrom purrr map_dfc
 #' @importFrom zoo na.approx
-#' @importFrom shinyFiles shinyDirButton shinyDirChoose parseDirPath
+#' @importFrom shinyFiles shinyDirButton shinyDirChoose parseDirPath getVolumes
 #' @importFrom shinybusy use_busy_spinner show_spinner hide_spinner
 NULL
