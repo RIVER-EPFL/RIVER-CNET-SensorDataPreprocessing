@@ -276,7 +276,8 @@ getSiteFilesData <- function(filesPerDir, site,
     columns <- colnames(fileData)
     if ((length(columns) != length(columnsRef) | (!all(columns %in% columnsRef)))) {
       warningMessage(paste0('The ', dir, ' file for ', site, ' does not have the correct columns!\n',
-                            '  File: ', currentFile))
+                            '  File: ', currentFile, '\n',
+                            '  Correct columns names are: ', paste(columnsRef, collapse = ', ')))
       return(FALSE)
     }
 
