@@ -213,7 +213,8 @@ listSitesFiles <- function(dir, filePattern = '[[:alnum:]_]*[[:upper:]]{3}[[:aln
 
   # Check if empty
   if (length(dirFiles) == 0) {
-    warningMessage(paste0('No file found in the following directory:\n  ', dir))
+    warningMessage(paste0('No file found in the following directory:\n',
+                          '  ', dir))
     return(FALSE)
   }
 
@@ -256,7 +257,8 @@ getSiteFilesData <- function(filesPerDir, site,
 
     # If file is empty, warn and return
     if (file.info(currentFile)$size == 0) {
-      warningMessage(paste0('The ', dir, ' file for ', site, ' is empty!\n  File: ', currentFile))
+      warningMessage(paste0('The ', dir, ' file for ', site, ' is empty!\n',
+                            '  File: ', currentFile))
       return(FALSE)
     }
 
@@ -265,14 +267,16 @@ getSiteFilesData <- function(filesPerDir, site,
 
     # If df is empty, warn and return
     if (nrow(fileData) == 0) {
-      warningMessage(paste0('The ', dir, ' file for ', site, ' is an empty data frame!\n  File: ', currentFile))
+      warningMessage(paste0('The ', dir, ' file for ', site, ' is an empty data frame!\n',
+                            '  File: ', currentFile))
       return(FALSE)
     }
 
     # If df has not the correct columns, warn and return
     columns <- colnames(fileData)
     if ((length(columns) != length(columnsRef) | (!all(columns %in% columnsRef)))) {
-      warningMessage(paste0('The ', dir, ' file for ', site, ' does not have the correct columns!\n  File: ', currentFile))
+      warningMessage(paste0('The ', dir, ' file for ', site, ' does not have the correct columns!\n',
+                            '  File: ', currentFile))
       return(FALSE)
     }
 

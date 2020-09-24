@@ -31,9 +31,7 @@ combineSensorsDataPerSite <- function(inputDir, outputDir, sites, parameters) {
 
     # Indicate if no directory was found for this site and pass to the next
     if (length(siteDirsList) == 0) {
-      message('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-      warning(paste0('No directory found for ', site, '!'), call. = FALSE, immediate. = TRUE)
-      message('!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n')
+      warningMessage(paste0('No directory found for ', site, '!'))
       next
     }
 
@@ -65,9 +63,8 @@ combineSensorsDataPerSite <- function(inputDir, outputDir, sites, parameters) {
 
         # If the file is empty, warn the user and go to the next directory
         if (file.info(file)$size == 0) {
-          message('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-          warning(paste0('The following file is empty!\n  ', file), call. = FALSE, immediate. = TRUE)
-          message('!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n')
+          warningMessage(paste0('The following file is empty!\n',
+                                '  ', file))
           next
         }
 
@@ -84,9 +81,7 @@ combineSensorsDataPerSite <- function(inputDir, outputDir, sites, parameters) {
       # Warn the user and go for the next parameter
       # Else, append the data to the current site data
       if (sum(dim(parameterData)) == 0) {
-        message('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-        warning(paste0('No file found for parameter ', parameter$name, '!'), call. = FALSE, immediate. = TRUE)
-        message('!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n')
+        warningMessage(paste0('No file found for parameter ', parameter$name, '!'))
       } else {
         siteData %<>% full_join(parameterData, by = 'Date')
       }
@@ -195,9 +190,8 @@ parseCO2ATM <- function(filePath) {
   # If all the Dates are from 2000
   # Warn the user and return an empty data frame
   if (all(year(co2atmDf$Date) == 2000)) {
-    message('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    warning(paste0('The following file is ignored because all the dates are from 2000.\n  File: ', filePath), call. = FALSE, immediate. = TRUE)
-    message('!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n')
+    warningMessage(paste0('The following file is ignored because all the dates are from 2000.\n',
+                          '  File: ', filePath))
     return(data.frame())
   }
 
@@ -225,9 +219,10 @@ parseCO2ATM <- function(filePath) {
     )
 
     # Warn the user of this change
-    message('\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    warning(paste0('Date resetting problem for CO2ATM.\n  File: ', filePath, '\n  Starting at date: ', min(correctedDates), '\n  Finishing at date: ', max(correctedDates)), call. = FALSE, immediate. = TRUE)
-    message('!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n')
+    warningMessage(paste0('Date resetting problem for CO2ATM.\n',
+                          '  File: ', filePath, '\n',
+                          '  Starting at date: ', min(correctedDates), '\n',
+                          '  Finishing at date: ', max(correctedDates)))
 
     # Get the correct dates and merge it with the corrected dates to update the data frame
     correctDates <- co2atmDf %>% filter(year(Date) != 2000) %>% pull(Date)
