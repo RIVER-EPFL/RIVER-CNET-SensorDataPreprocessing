@@ -11,7 +11,10 @@ portalDataConversionUI <- function(id) {
     gadgetTitleBar(
       'Sensors data conversion for portal',
       left = NULL,
-      right = miniTitleBarButton(ns('run'), 'Run', primary = TRUE)
+      right = span(
+        actionButton(ns('help'), icon('question-circle'), class = 'icon-btn'),
+        miniTitleBarButton(ns('run'), 'Run', primary = TRUE)
+      )
     ),
     # Create the content of the gadget as a grid
     div(
@@ -129,6 +132,20 @@ portalDataConversion <- function(input, output, session, roots) {
 
     # Stop spinner
     hide_spinner()
+  })
+
+
+
+  ## Help logic ###################################################################
+
+  # Create observeEvent that react to the help button
+  observeEvent(input$help, ignoreInit = TRUE, {
+    showModal(
+      modalDialog(
+        title = 'HELP', size = 'l', easyClose = TRUE,
+        htmlTemplate(system.file('html/conversion_help.html', package = "metalpDataPreprocessing"))
+      )
+    )
   })
 }
 

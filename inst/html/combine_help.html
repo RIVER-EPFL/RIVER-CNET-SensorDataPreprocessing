@@ -1,0 +1,66 @@
+<table class="help-table">
+    <tbody>
+        <tr>
+            <th>
+                Input Directory:
+            </th>
+            <td>
+                <span>Select a folder that contains subfolders for each station and sampling date. The subfolders names must have a date followed by an underscore and the station abreviation in capitals. E.g. <i>'20200918_VAD'</i>.</span>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Subfolders Structure:
+            </th>
+            <td>
+                <span>The subfolders must contain the sensor output files as the come out and they will be detected automatically. If an empty file or no file is found for on sensor, it will be ignored and a warning will be issued. Here is the list of files that are detected for each sensor:</span>
+                <br>
+                <ul>
+                    <li><b>BP:</b> file ending with <i>'_BP.csv'</i></li>
+                    <li><b>CO2atm:</b> file ending with <i>'_CO2ATM.LOG'</i></li>
+                    <li><b>TURB:</b> <i>'Cat.TXT'</i> file within a <i>'TURB'</i> subfolder</li>
+                    <li><b>DO:</b> <i>'Cat.TXT'</i> file within a <i>'DO'</i> subfolder</li>
+                    <li><b>CDOM:</b> <i>'Cat.TXT'</i> file within a <i>'CDOM'</i> subfolder</li>
+                    <li><b>PAR1:</b> file ending with <i>'_PAR1.csv'</i></li>
+                    <li><b>PAR2:</b> file ending with <i>'_PAR2.csv'</i></li>
+                    <li><b>DEPTH:</b> file ending with <i>'_NDEPTH.csv'</i></li>
+                    <li><b>pCO2:</b> file ending with <i>'_PCO2.csv'</i></li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Output Folder:
+            </th>
+            <td>
+                <span>Any folder that you want to use as output. Beware that all duplicated files will be overwritten. Possible output file names:</span>
+                <br>
+                <span class="no-justify"><i>log.txt, warnings.txt, &lt;station abreviation&gt;_raw_hf.csv.</i></span>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Station Selection:
+            </th>
+            <td>
+                <span>Select all the stations for which you want to combine data. All the stations with missing folders will be ignored and a warning will be issued.</span>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Parameter Selection:
+            </th>
+            <td>
+                <span>Select the parameters to look for. If no data is found for a parameter, the column will be filled with 'NA' and some warnings will be issued.</span>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Run Merging:
+            </th>
+            <td>
+                <span>To start the merge, fill all the inputs and press the <i>'RUN'</i> button in the right top corner. The merge will start only if all the fields are filled.</span>
+            </td>
+        </tr>
+    </tbody>
+</table>

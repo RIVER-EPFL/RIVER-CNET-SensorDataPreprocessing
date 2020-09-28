@@ -1,0 +1,56 @@
+<table class="help-table">
+    <tbody>
+        <tr>
+            <th>
+                Input Folders:
+            </th>
+            <td>
+                <span>Select a folder that contains <i>'.csv'</i> files with eihter the measured 10 minutes data with gaps or the full modeled 10 minutes data.</span>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Input Files:
+            </th>
+            <td>
+                <span>The file names must have at least the station abreviation in capital letters (e.g. VAD) and finish by <i>'.csv'</i>. They must contains exactly the following columns in whatever order:</span>
+                <br>
+                <span class="no-justify"><i>Date, BPmbar, CDOMppb, CO2atmppm, ConduScm, DOmgL, DischargeLsec, PAR1Lux, PAR2Lux, TurbiNTU, WaterTempdegC, pCO2ppm</i></span>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Output Folder:
+            </th>
+            <td>
+                <span>Any folder that you want to use as output. Beware that all duplicated files will be overwritten. Possible output file names:</span>
+                <br>
+                <span class="no-justify"><i>log.txt, warnings.txt, 10min_data.csv, 6H_data.csv, 12H_data.csv, 24H_data.csv.</i></span>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Station Selection:
+            </th>
+            <td>
+                <span>Select all the stations for which you want to convert data. All the stations with missing files or information will be ignored and a warning will be issued.</span>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Data To Save:
+            </th>
+            <td>
+                <span>Select the data to be saved and computed. For the 6H, 12H, 24H data the new intervals will be computed which might take some time. Note that the 10min data file will always be created but saved only if the right option is selected.</span>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Run Convertion:
+            </th>
+            <td>
+                <span>To start the convertion, fill all the inputs and press the <i>'RUN'</i> button in the right top corner. The convertion will start only if all the fields are filled.</span>
+            </td>
+        </tr>
+    </tbody>
+</table>

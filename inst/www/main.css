@@ -66,5 +66,62 @@
  * ======================================== */
 
 .sF-dirWindow .sF-dirInfo > div {
-    height: 30vh;
+    height: 25vh;
+}
+
+/* ========================================
+ * Custom icon only button
+ * ======================================== */
+
+.icon-btn {
+    border: none;
+    background: none;
+    padding: 0 !important;
+    margin: 0 0 10px !important;
+    height: max-content !important;
+    line-height: 0;
+    color: #ee1c00;
+}
+
+.icon-btn:hover,
+.icon-btn:focus,
+.icon-btn:active {
+    color: #1866c0;
+    background: none;
+}
+
+/* ========================================
+ * Modal help table
+ * ======================================== */
+
+
+.help-table th {
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+.help-table td span {
+    display: block;
+    text-align: justify;
+}
+
+.help-table td span.no-justify {
+    text-align: left;
+}
+
+.help-table th, .help-table td {
+    padding: 1.5em 1em;
+}
+
+.help-table tr {
+    border-bottom: 1px solid #1866c0;
+}
+
+.help-table tr:first-child th,
+.help-table tr:first-child td {
+    padding-top: 0;
+}
+
+.help-table tr:last-child {
+    border: none;
 }

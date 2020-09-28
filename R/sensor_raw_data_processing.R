@@ -11,7 +11,10 @@ sensorRawDataProcessingUI <- function(id) {
     gadgetTitleBar(
       'Sensors raw data processing',
       left = NULL,
-      right = miniTitleBarButton(ns('run'), 'Run',primary = TRUE)
+      right = span(
+        actionButton(ns('help'), icon('question-circle'), class = 'icon-btn'),
+        miniTitleBarButton(ns('run'), 'Run', primary = TRUE)
+      )
     ),
     # Create the content of the gadget as a grid
     div(
@@ -123,6 +126,20 @@ sensorRawDataProcessing <- function(input, output, session, roots) {
 
     # Stop spinner
     hide_spinner()
+  })
+
+
+
+  ## Help logic ###################################################################
+
+  # Create observeEvent that react to the help button
+  observeEvent(input$help, ignoreInit = TRUE, {
+    showModal(
+      modalDialog(
+        title = 'HELP', size = 'l', easyClose = TRUE,
+        htmlTemplate(system.file('html/combine_help.html', package = "metalpDataPreprocessing"))
+      )
+    )
   })
 }
 
