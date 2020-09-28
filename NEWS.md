@@ -1,3 +1,15 @@
+# Version 0.2.1
+
+Bug fixes:
+- Add `tidyr` package to the `DESCRIPTION` `Imports`
+- Correct date parsing in `convert_data.R`
+- Use `shinyFiles::getVolumes()` function to create the roots to make it OS independant
+
+Enhancements:
+- Implement help
+- Round date to 2 decimals in `combine_data.R`
+- Indicate the requiered columns in warnings for the `combine_data.R`
+
 # Version 0.2.0
 
 Enhancements:
