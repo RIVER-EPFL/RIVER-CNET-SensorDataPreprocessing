@@ -8,3 +8,12 @@ The addin is available via a package. It is not on _CRAN_, thereby you will need
 ```r
 devtools::install_github("mclement18/SBER-METALP-SensorDataPreprocessing")
 ```
+
+## Update
+
+To update the package, use the following command:
+```r
+devtools::update("metalpDataPreprocessing")
+```
+
+After an update, you might have to restart your R session for some changes take place.
