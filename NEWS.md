@@ -7,7 +7,7 @@ Bug fixes:
 
 Enhancements:
 - Implement help
-- Round date to 2 decimals in `combine_data.R`
+- Round data to 2 decimals in `combine_data.R`
 - Indicate the requiered columns in warnings for the `combine_data.R`
 
 # Version 0.2.0
