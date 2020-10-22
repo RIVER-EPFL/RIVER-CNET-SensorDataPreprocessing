@@ -143,7 +143,7 @@ portalDataConversion <- function(input, output, session, roots) {
     showModal(
       modalDialog(
         title = 'HELP', size = 'l', easyClose = TRUE,
-        htmlTemplate(system.file('html/conversion_help.html', package = "metalpDataPreprocessing"))
+        htmlTemplate(system.file('html_templates/conversion_help.html', package = "metalpDataPreprocessing"))
       )
     )
   })
