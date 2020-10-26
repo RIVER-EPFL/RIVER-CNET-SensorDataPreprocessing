@@ -378,7 +378,8 @@ movingAverage <- function(df, daily = TRUE, intLength = NULL,
   message('  Computing the average ...')
 
   df %<>% group_by_at(c(dateCol, siteCol)) %>%
-    summarise(across(where(is.numeric), ~ mean(.x, na.rm = TRUE)))
+    summarise(across(where(is.numeric), ~ mean(.x, na.rm = TRUE))) %>%
+    mutate(across(where(is.numeric), round, digits = 2))
 
   # Return the new df
   return(df)
