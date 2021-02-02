@@ -263,8 +263,8 @@ parsePAR1 <- function(filePath) {
   par1Df <- fread(filePath) %>%
     # Rename the columns
     rename(
-      Date = starts_with('Date'),
-      PAR1Lux = starts_with('Intensity'),
+      Date = starts_with('Dat'),
+      PAR1Lux = starts_with('Intens'),
       PAR1Temp = starts_with('Temp')
     ) %>%
     # Select the needed columns
@@ -285,8 +285,8 @@ parsePAR2 <- function(filePath) {
   par2Df <- fread(filePath) %>%
     # Rename the columns
     rename(
-      Date = starts_with('Date'),
-      PAR2Lux = starts_with('Intensity'),
+      Date = starts_with('Dat'),
+      PAR2Lux = starts_with('Intens'),
       PAR2Temp = starts_with('Temp')
     ) %>%
     # Select the needed columns
