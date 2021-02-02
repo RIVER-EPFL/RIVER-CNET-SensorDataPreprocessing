@@ -1,3 +1,9 @@
+# Version 0.2.2
+
+Enhancements:
+- Add plasticity to column name detection for the PAR sensors to allow other languages
+- Add the columns of the missing parameters in the output files when combining raw data
+
 # Version 0.2.1
 
 Bug fixes:
