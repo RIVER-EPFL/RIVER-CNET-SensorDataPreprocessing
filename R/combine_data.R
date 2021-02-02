@@ -78,10 +78,13 @@ combineSensorsDataPerSite <- function(inputDir, outputDir, sites, parameters) {
       } # End of siteDirsList loop
 
       # If the current parameter data is empty
-      # Warn the user and go for the next parameter
+      # Warn the user, add an empty column fir this parameter and go for the next parameter
       # Else, append the data to the current site data
       if (sum(dim(parameterData)) == 0) {
         warningMessage(paste0('No file found for parameter ', parameter$name, '!'))
+        for (column in unlist(strsplit(parameter$columns, ','))) {
+          siteData %<>% mutate(!!column := rep(as.numeric(NA), n()))
+        }
       } else {
         siteData %<>% full_join(parameterData, by = 'Date')
       }
