@@ -24,7 +24,7 @@ portalDataConversionUI <- function(id) {
         selectizeInput(
           inputId =  ns('sites'),
           label = span('Stations', actionButton(ns('allSites'), 'All'), actionButton(ns('clearSites'), 'Clear')),
-          choices = c('VAD', 'VAU', 'VEL', 'FED', 'FEU', 'PEU', 'AND', 'ANU', 'RIC', 'VID', 'VIM', 'VIU'),
+          choices = c('DGT', 'FP1', 'FP3', 'FP4', 'GLT', 'GLV', 'RGV'),
           multiple = TRUE,
           options = list(
             'placeholder' = 'Select some stations...',
@@ -91,7 +91,7 @@ portalDataConversion <- function(input, output, session, roots) {
 
   # Create observeEvents to update the select inputs with all the options
   observeEvent(input$allSites, ignoreInit = TRUE, {
-    updateSelectizeInput(session, 'sites', selected = c('VAD', 'VAU', 'VEL', 'FED', 'FEU', 'PEU', 'AND', 'ANU', 'RIC', 'VID', 'VIM', 'VIU'))
+    updateSelectizeInput(session, 'sites', selected = c('DGT', 'FP1', 'FP3', 'FP4', 'GLT', 'GLV', 'RGV'))
   })
 
   # Create observeEvents to clear the select inputs
