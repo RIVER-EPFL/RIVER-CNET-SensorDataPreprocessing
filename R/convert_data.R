@@ -226,8 +226,9 @@ listSitesFiles <- function(dir, filePattern = '[[:alnum:]_]*[[:upper:]]{3}[[:aln
 getSiteFilesData <- function(filesPerDir, site,
                              columnsRef = c('Date', 'BPmbar', 'CDOMppb',
                                             'CO2atmppm', 'ConduScm', 'DOmgL',
-                                            'DischargeLsec', 'PAR1Lux', 'PAR2Lux',
+                                            'WaterDepthmm', 'PAR1Lux', 'PAR2Lux',
                                             'TurbiNTU', 'WaterTempdegC', 'pCO2ppm')) {
+  # removed 'DischargeLsec' from the list, replaced by 'WaterDepthmm'
   # filesPerDir: Named list of character vectors, names -> directory name, vector -> files
   # site: String, site name
   # columnsRef: Character vector, columns to check for presence
