@@ -94,6 +94,7 @@ convertDataForPortal <- function(inputMeasuredDir, inputModeledDir, outputDir, d
 
   # Transforme df to wide format
   hf_10min_df %<>% pivot_wider(
+	id_cols = c(Date, Site_ID, data_type), # Explicitly naming `id_cols`
     names_from = data_type,
     values_from = where(is.numeric),
     names_glue = "{.value}_{data_type}"
@@ -301,10 +302,21 @@ getSiteFilesData <- function(filesPerDir, site,
 
 mergeMeasuredAndModeled <- function(measuredData, modeledData, site) {
   # Pivot longer measured and modeled data
-  measuredData %<>% pivot_longer(-Date, names_to = 'parameter', values_to = 'measured')
-  modeledData %<>% pivot_longer(-Date, names_to = 'parameter', values_to = 'modeled')
+  	measuredData %<>% pivot_longer(
+	cols = -Date, # Columns to pivot
+	names_to = 'parameter', # New column for parameter names
+	values_to = 'measured', # New column for measured values
+	id_cols = c(Date) # Explicitly naming `id_cols`
+	)
 
-  # Return directly the output
+	modeledData %<>% pivot_longer(
+	cols = -Date, # Columns to pivot
+	names_to = 'parameter', # New column for parameter names
+	values_to = 'modeled', # New column for modeled values
+	id_cols = c(Date) # Explicitly naming `id_cols`
+	)
+
+# Return directly the output
   # Join the data
   full_join(measuredData, modeledData, by = c('Date', 'parameter')) %>%
     # Remove modeled data where there is a measured one
@@ -312,10 +324,20 @@ mergeMeasuredAndModeled <- function(measuredData, modeledData, site) {
       modeled = if_else(!is.na(measured), as.numeric(NA), modeled),
       Site_ID = site
     ) %>%
-    # Pivot longer measured and modeled
-    pivot_longer(c(measured, modeled), names_to = 'data_type', values_to = 'value') %>%
-    # pivot wider parameters
-    pivot_wider(c(Date, Site_ID, data_type), names_from = 'parameter', values_from = 'value') %>%
+    # **Updated `pivot_longer()` with explicit `id_cols`**
+    pivot_longer(
+      cols = c(measured, modeled),    # Columns to pivot
+      names_to = 'data_type',         # New column for data types
+      values_to = 'value',            # New column for values
+      id_cols = c(Date, Site_ID)      # Explicitly naming `id_cols`
+    ) %>%
+    # **Updated `pivot_wider()` with explicit `id_cols`**
+    pivot_wider(
+      id_cols = c(Date, Site_ID, data_type),  # Explicitly naming `id_cols`
+      names_from = 'parameter',                # Columns to pivot names from
+      values_from = 'value',                   # Columns to pivot values from
+      names_glue = "{.value}_{data_type}"      # New column names format
+    ) %>%
     # Round to 2 decimals
     mutate(across(where(is.numeric), round, digits = 2))
 }
